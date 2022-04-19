@@ -164,5 +164,5 @@ class UserRating(models.Model):
 
     def __str__(self):
         if not settings.STAR_RATINGS_ANONYMOUS:
-            return '{} rating {} for {}'.format(self.user, self.score, self.rating.content_object)
-        return '{} rating {} for {}'.format(self.ip, self.score, self.rating.content_object)
+            return '{} rating {} for {}'.format(self.user, self.score, self.rating.content)
+        return '{} rating {} for {}'.format(self.ip, self.score, self.rating.content)
