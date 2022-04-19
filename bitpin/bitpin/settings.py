@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'users',
     'content',
 
-    "pinax.ratings",
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -128,9 +128,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
-
-PINAX_RATINGS_CATEGORY_CHOICES = {
-    "content.Content": {
-        "Rate": "How good is the exposure?",
-    },
-}
