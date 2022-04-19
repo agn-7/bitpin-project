@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'users',
     'contents',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+STAR_RATINGS_ANONYMOUS = False
+STAR_RATINGS_CLEARABLE = False
+STAR_RATINGS_RERATE = True
+STAR_RATINGS_RERATE_SAME_DELETE = False
+STAR_RATINGS_RANGE = 5
+
