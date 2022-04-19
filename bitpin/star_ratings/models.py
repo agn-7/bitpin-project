@@ -33,7 +33,8 @@ class RatingManager(models.Manager):
         if isinstance(instance, self.model):
             raise TypeError("Rating manager 'for_instance' expects model to be rated, not Rating model.")
         # ct = ContentType.objects.get_for_model(instance)
-        ratings, created = self.get_or_create(content_type=Content, object_id=instance.pk)
+        ct = Content.objects.get_for_model(instance)
+        ratings, created = self.get_or_create(content=ct)
         return ratings
 
     def ratings_for_instance(self, instance):
@@ -46,12 +47,14 @@ class RatingManager(models.Manager):
         rating._user_rating_deleted = True
         return rating
 
-    def rate(self, instance, score, user=None, ip=None, clear=False):
+    def rate(self, instance, score, user=None, clear=False):
         if isinstance(instance, self.model):
             raise TypeError("Rating manager 'rate' expects model to be rated, not Rating model.")
         # ct = ContentType.objects.get_for_model(instance)
+        ct = Content.objects.get_for_model(instance)
 
         user = _clean_user(user)
+        print(22222222222222)
         existing_rating = UserRating.objects.for_instance_by_user(instance, user)
 
         if existing_rating:
@@ -71,8 +74,9 @@ class RatingManager(models.Manager):
             # user has cleared without an existing_rating
             return
         else:
-            rating, created = self.get_or_create(content_type=Content, object_id=instance.pk)
-            return UserRating.objects.create(user=user, score=score, rating=rating, ip=ip).rating
+            print(11111111111111111)
+            rating, created = self.get_or_create(content_type=ct, object_id=instance.pk)
+            return UserRating.objects.create(user=user, score=score, rating=rating).rating
 
 
 class AbstractBaseRating(models.Model):
@@ -121,9 +125,10 @@ class Rating(AbstractBaseRating):
 class UserRatingManager(models.Manager):
     def for_instance_by_user(self, instance, user=None):
         # ct = ContentType.objects.get_for_model(instance)
+        ct = Content.objects.get_for_model(instance)
         user = _clean_user(user)
         if user:
-            return self.filter(rating__content_type=Content, rating__object_id=instance.pk, user=user).first()
+            return self.filter(rating__content=ct, user=user).first()
         else:
             return None
 
@@ -157,7 +162,7 @@ class UserRating(models.Model):
     score = models.PositiveSmallIntegerField(choices=SCORE_CHOICES, default=1)
     rating = models.ForeignKey(get_star_ratings_rating_model_name(), related_name='user_ratings', on_delete=models.CASCADE)
 
-    objects = UserRatingManager()
+    # objects = UserRatingManager()
 
     class Meta:
         unique_together = ['user', 'rating']
@@ -165,4 +170,4 @@ class UserRating(models.Model):
     def __str__(self):
         if not settings.STAR_RATINGS_ANONYMOUS:
             return '{} rating {} for {}'.format(self.user, self.score, self.rating.content)
-        return '{} rating {} for {}'.format(self.ip, self.score, self.rating.content)
+        return '{} rating {} for {}'.format(self.score, self.rating.content)
