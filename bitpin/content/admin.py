@@ -1,10 +1,12 @@
 from django.contrib import admin
 
-from .models import Content, OverallStarRating, StarRating
+from pinax.ratings.models import OverallRating, Rating
+
+from .models import Content
 
 
 class Rate(admin.TabularInline):
-    model = StarRating
+    model = Rating
     extra = 0
 
 
@@ -14,5 +16,5 @@ class ContentAdmin(admin.ModelAdmin):
 
 # admin.site.register(Content, ContentAdmin)  # TODO :: it didn't work!
 admin.site.register(Content)
-admin.site.register(OverallStarRating)
-admin.site.register(StarRating)
+admin.site.register(OverallRating)
+admin.site.register(Rating)
