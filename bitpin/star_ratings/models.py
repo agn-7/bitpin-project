@@ -1,6 +1,8 @@
 from __future__ import division, unicode_literals
 
 from decimal import Decimal
+from multiprocessing.spawn import import_main_path
+from operator import imod
 
 from django.conf import settings
 from django.db import models
@@ -16,7 +18,7 @@ class Rating(models.Model):
     """
     count = models.PositiveBigIntegerField(default=0)
     average = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal(0.0))
-    content = models.ForeignKey(Content, null=True, blank=True, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, null=True, blank=True, on_delete=models.CASCADE, unique=True)
 
     def __str__(self):
         return f"id:{self.content.id} — title:{self.content.title}"
@@ -42,7 +44,7 @@ class UserRating(models.Model):
         (4, _("Very Good")),
         (5, _("Excellent")),
     )
-
+    import uuid
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     score = models.PositiveSmallIntegerField(choices=SCORE_CHOICES, default=1)
     rating = models.ForeignKey(Rating, related_name='user_ratings', on_delete=models.CASCADE)
