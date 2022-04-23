@@ -22,10 +22,9 @@ from .serializers import ContentSerializer
 from .models import Content
 
 class ContentView(generics.ListAPIView):
-    # authentication_classes = [SessionAuthentication, BasicAuthentication,
-    #                           TokenAuthentication]
-    # permission_classes = [IsAuthenticated, IsAdminUser]
-    http_method_names = ['get', 'head']
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    http_method_names = ('get', 'head')
     renderer_classes = (JSONRenderer,)
 
     def get_queryset(self):
