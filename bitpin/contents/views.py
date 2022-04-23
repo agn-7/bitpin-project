@@ -26,6 +26,7 @@ class ContentView(generics.ListAPIView):
     permission_classes = (IsAuthenticated, IsAdminUser)
     http_method_names = ('get', 'head')
     renderer_classes = (JSONRenderer,)
+    serializer_class = ContentSerializer
 
     def get_queryset(self):
         return Content.objects.all()
@@ -34,7 +35,7 @@ class ContentView(generics.ListAPIView):
         try:
             content_list = self.get_queryset()
             if content_list:
-                serializer = ContentSerializer(content_list, many=True)
+                serializer = ContentSerializer(content_list, many=True, context={'user_id': request.user.id})
                 return Response(serializer.data)
             else:
                 return Response(status=status.HTTP_404_NOT_FOUND)
