@@ -18,7 +18,7 @@ class Rating(models.Model):
     """
     count = models.PositiveBigIntegerField(default=0)
     average = models.DecimalField(max_digits=6, decimal_places=3, default=Decimal(0.0))
-    content = models.ForeignKey(Content, null=True, blank=True, on_delete=models.CASCADE, unique=True)
+    content = models.OneToOneField(Content, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"id:{self.content.id} — title:{self.content.title}"
