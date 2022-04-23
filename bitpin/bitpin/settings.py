@@ -31,13 +31,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Built-it
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    # 3rd-Party
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_swagger',
+    # Local
     'users',
     'contents',
     'star_ratings',
