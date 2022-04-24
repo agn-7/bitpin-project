@@ -11,30 +11,86 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('contents', '0001_initial'),
+        ("contents", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Rating',
+            name="Rating",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('count', models.PositiveBigIntegerField(default=0)),
-                ('average', models.DecimalField(decimal_places=3, default=Decimal('0'), max_digits=6)),
-                ('content', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='contents.content')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("count", models.PositiveBigIntegerField(default=0)),
+                (
+                    "average",
+                    models.DecimalField(
+                        decimal_places=3, default=Decimal("0"), max_digits=6
+                    ),
+                ),
+                (
+                    "content",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="contents.content",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UserRating',
+            name="UserRating",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.PositiveSmallIntegerField(choices=[(1, 'Terrible'), (2, 'Poor'), (3, 'Average'), (4, 'Very Good'), (5, 'Excellent')], default=1)),
-                ('rating', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_ratings', to='star_ratings.rating')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "score",
+                    models.PositiveSmallIntegerField(
+                        choices=[
+                            (1, "Terrible"),
+                            (2, "Poor"),
+                            (3, "Average"),
+                            (4, "Very Good"),
+                            (5, "Excellent"),
+                        ],
+                        default=1,
+                    ),
+                ),
+                (
+                    "rating",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="user_ratings",
+                        to="star_ratings.rating",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('user', 'rating')},
+                "unique_together": {("user", "rating")},
             },
         ),
     ]

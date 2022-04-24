@@ -7,14 +7,20 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contents', '0001_initial'),
-        ('star_ratings', '0001_initial'),
+        ("contents", "0001_initial"),
+        ("star_ratings", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='rating',
-            name='content',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='contents.content', unique=True),
+            model_name="rating",
+            name="content",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="contents.content",
+                unique=True,
+            ),
         ),
     ]

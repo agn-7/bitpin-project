@@ -7,13 +7,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('star_ratings', '0003_alter_rating_content'),
+        ("star_ratings", "0003_alter_rating_content"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='userrating',
-            name='score',
-            field=models.PositiveSmallIntegerField(choices=[(1, 'Terrible'), (2, 'Poor'), (3, 'Average'), (4, 'Very Good'), (5, 'Excellent')], default=1, validators=[django.core.validators.MaxValueValidator(5), django.core.validators.MinValueValidator(1)]),
+            model_name="userrating",
+            name="score",
+            field=models.PositiveSmallIntegerField(
+                choices=[
+                    (1, "Terrible"),
+                    (2, "Poor"),
+                    (3, "Average"),
+                    (4, "Very Good"),
+                    (5, "Excellent"),
+                ],
+                default=1,
+                validators=[
+                    django.core.validators.MaxValueValidator(5),
+                    django.core.validators.MinValueValidator(1),
+                ],
+            ),
         ),
     ]
