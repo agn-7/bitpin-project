@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
+from django.utils.datastructures import MultiValueDictKeyError
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -22,11 +23,14 @@ class RatingView(APIView):
     # serializer_class = UserRatingSerializer  # TODO :: Add a serilizer to create and update the model.
 
     def post(self, request, *args, **kwargs):
-        content_id = self.kwargs['content_id']
-        score = request.POST['score']
-        user_id = request.user.id
-
         try:
+            try:
+                content_id = self.kwargs['content_id'] 
+            except KeyError:
+                content_id = request.POST['content_id']
+            score = request.POST['score']
+            user_id = request.user.id
+
             res = UserRating.objects.update_or_create(
                 user_id=user_id,
                 rating_id=content_id,
@@ -37,7 +41,9 @@ class RatingView(APIView):
                 return Response('Created', status=status.HTTP_201_CREATED)
             else:
                 '''Means updated'''
-                return Response('Updated', status=status.HTTP_200_OK)
+                return Response('Updated', status=status.HTTP_200_OK)            
+        except MultiValueDictKeyError as exc:
+            return Response(f"Error: {exc} is missing", status=status.HTTP_400_BAD_REQUEST)
         except Exception as exc:
             print(exc)
             return Response(f"Error: {exc}", status=status.HTTP_400_BAD_REQUEST)
