@@ -1,4 +1,3 @@
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/bitpin-project.svg)](https://pypi.python.org/pypi/bitpin-project/)
 [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/)
 [![build](https://github.com/agn-7/bitpin-project/workflows/build/badge.svg)](https://github.com/agn-7/bitpin-project/actions/workflows/github-actions.yml)
 [![codecov](https://codecov.io/gh/agn-7/bitpin-project/branch/main/graph/badge.svg?style=flat-square)](https://codecov.io/gh/agn-7/bitpin-project) 
