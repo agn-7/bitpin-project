@@ -1,3 +1,46 @@
-from django.shortcuts import render
+from __future__ import unicode_literals
 
-# Create your views here.
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.authentication import (
+    BasicAuthentication,
+    SessionAuthentication,
+    TokenAuthentication)
+
+
+from .models import UserRating
+
+
+class RatingView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
+    http_method_names = ('post',)
+    # serializer_class = UserRatingSerializer  # TODO
+
+    def post(self, request, *args, **kwargs):
+        content_id = self.kwargs['content_id']
+        score = request.POST['score']
+        user_id = request.user.id
+
+        try:
+            UserRating.objects.create(
+                user_id=user_id,
+                score=score, 
+                rating_id=content_id
+            )
+            return Response('Created', status=status.HTTP_201_CREATED)
+        except IntegrityError:
+            res = UserRating.objects.filter(
+                rating_id=content_id, user_id=request.user.id).update(
+                    user_id=user_id, 
+                    score=score, 
+                    rating_id=content_id
+                )
+            return Response('Updated', status=status.HTTP_200_OK)
+        except Exception as exc:
+            return Response(exc, status=status.HTTP_400_BAD_REQUEST)
