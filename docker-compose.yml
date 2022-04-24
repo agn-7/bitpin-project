@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  bitpin_nginx:
+    build: ./nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    container_name: bitpin_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "/opt/media:/code/media:ro"
+      - "./bitpin/static:/code/bitpin/static:ro"
+      - "./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro"
+    depends_on:
+      - bitpin_app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  bitpin_db:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    expose:
+      - "5432"
+    container_name: bitpin_db
+    volumes:
+      - bitpin-postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: bitpin_usr
+      POSTGRES_DB: bitpin_db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  bitpin_app:
+    build: .
+    image: bitpin:1.0.0
+    container_name: bitpin_app
+    command: bash start.sh
+    restart: unless-stopped
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/opt/media:/code/media:rw"
+      - "./nginx:/opt/nginx:rw"
+    expose:
+      - "80"
+      - "8000"
+    depends_on:
+      - bitpin_db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  pgadmin:
+    container_name: bitpin_pgadmin
+    hostname: pgadmin
+    image: dpage/pgadmin4
+    depends_on:
+      - bitpin_db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@ava.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    restart: unless-stopped
+
+volumes:
+  pgadmin:
+  bitpin-postgres-data:
+    driver: local
