@@ -12,6 +12,11 @@ urlpatterns = [
         view=views.RatingView.as_view(),
         name='rate'
     ),
+   path(
+        route='',
+        view=views.RatingView.as_view(),
+        name='rate'
+    ),
 ]
 
 
