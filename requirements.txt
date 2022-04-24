@@ -1,0 +1,6 @@
+Django==4.0.1
+djangorestframework
+django-rest-swagger
+gunicorn==20.0.4
+drf-yasg
+black==22.1.0
