@@ -12,7 +12,6 @@ from rest_framework.authentication import (
     SessionAuthentication,
     TokenAuthentication)
 
-
 from .models import UserRating
 
 
@@ -28,11 +27,16 @@ class RatingView(APIView):
         user_id = request.user.id
 
         try:
-            UserRating.objects.update_or_create(
+            res = UserRating.objects.update_or_create(
                 user_id=user_id,
                 rating_id=content_id,
                 defaults={"score": score}
             )
-            return Response('Done', status=status.HTTP_201_CREATED)
+            if res[-1]:
+                '''Means created'''
+                return Response('Created', status=status.HTTP_201_CREATED)
+            else:
+                '''Means updated'''
+                return Response('Updated', status=status.HTTP_200_OK)
         except Exception as exc:
             return Response('Error', status=status.HTTP_400_BAD_REQUEST)
