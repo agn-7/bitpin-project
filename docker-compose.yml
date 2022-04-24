@@ -10,7 +10,7 @@ services:
       - "80:80"
     volumes:
       - "/opt/media:/code/media:ro"
-      - "./bitpin/static:/code/bitpin/static:ro"
+      - "./bitpin/static:/code/static:ro"
       - "./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro"
     depends_on:
       - bitpin_app
