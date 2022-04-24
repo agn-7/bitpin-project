@@ -7,17 +7,9 @@ from . import views
 
 
 urlpatterns = [
-   path(
-        route='<int:content_id>/',
-        view=views.RatingView.as_view(),
-        name='rate'
-    ),
-   path(
-        route='',
-        view=views.RatingView.as_view(),
-        name='rate'
-    ),
+    path(route="<int:content_id>/", view=views.RatingView.as_view(), name="rate"),
+    path(route="", view=views.RatingView.as_view(), name="rate"),
 ]
 
 
-app_name = 'star_ratings'
+app_name = "star_ratings"

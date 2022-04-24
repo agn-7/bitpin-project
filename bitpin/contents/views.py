@@ -9,15 +9,17 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.authentication import (
     BasicAuthentication,
     SessionAuthentication,
-    TokenAuthentication)
+    TokenAuthentication,
+)
 
 from .serializers import ContentSerializer
 from .models import Content
 
+
 class ContentView(generics.ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsAdminUser)
-    http_method_names = ('get', 'head')
+    http_method_names = ("get", "head")
     renderer_classes = (JSONRenderer,)
     serializer_class = ContentSerializer
 
@@ -28,7 +30,9 @@ class ContentView(generics.ListAPIView):
         try:
             content_list = self.get_queryset()
             if content_list:
-                serializer = ContentSerializer(content_list, many=True, context={'user_id': request.user.id})
+                serializer = ContentSerializer(
+                    content_list, many=True, context={"user_id": request.user.id}
+                )
                 return Response(serializer.data)
             else:
                 return Response(status=status.HTTP_404_NOT_FOUND)

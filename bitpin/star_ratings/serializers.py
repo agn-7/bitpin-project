@@ -4,14 +4,12 @@ from .models import Rating, UserRating
 
 
 class RatingSerializer(serializers.ModelSerializer):
-
     class Meta:
-        fields = ('count', 'average')
+        fields = ("count", "average")
         model = Rating
 
 
 class UserRatingSerializer(serializers.ModelSerializer):
-
     class Meta:
-        fields = ('score', )
+        fields = ("score",)
         model = UserRating

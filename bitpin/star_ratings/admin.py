@@ -9,11 +9,11 @@ from django.utils.html import format_html
 
 
 class UserRatingAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'score')
+    list_display = ("__str__", "score")
 
 
 class RatingAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'average', 'count')
+    list_display = ("__str__", "average", "count")
 
 
 admin.site.register(Rating, RatingAdmin)
