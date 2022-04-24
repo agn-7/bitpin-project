@@ -42,7 +42,7 @@ urlpatterns = [
         view=include('contents.urls')
     ),
     path(
-        route='api/v1/rating/',
+        route='api/v1/rate/',
         view=include('star_ratings.urls')
     ),
     path('api-token-auth/', views.obtain_auth_token),
