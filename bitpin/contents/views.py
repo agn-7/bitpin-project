@@ -1,17 +1,10 @@
 from __future__ import unicode_literals
 
-from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponseRedirect, JsonResponse
-from django.views.generic import View
-from graphene import ObjectType
+from django.core.exceptions import ObjectDoesNotExist
 
-from rest_framework import generics, permissions, renderers, status
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.authentication import (
     BasicAuthentication,

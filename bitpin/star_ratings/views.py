@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import IntegrityError
 from django.utils.datastructures import MultiValueDictKeyError
 
 from rest_framework import status
