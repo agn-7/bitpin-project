@@ -38,8 +38,12 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(
-        route='api/v1/',
+        route='api/v1/content/',
         view=include('contents.urls')
+    ),
+    path(
+        route='api/v1/rating/',
+        view=include('star_ratings.urls')
     ),
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls')),

@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
    path(
-        route='content/',
+        route='',
         view=views.ContentView.as_view(),
         name='content_list'
     ),
