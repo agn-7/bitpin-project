@@ -20,7 +20,7 @@ class RatingView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsAdminUser)
     http_method_names = ('post',)
-    # serializer_class = UserRatingSerializer  # TODO
+    # serializer_class = UserRatingSerializer  # TODO :: Add a serilizer to create and update the model.
 
     def post(self, request, *args, **kwargs):
         content_id = self.kwargs['content_id']
@@ -28,19 +28,11 @@ class RatingView(APIView):
         user_id = request.user.id
 
         try:
-            UserRating.objects.create(
+            UserRating.objects.update_or_create(
                 user_id=user_id,
-                score=score, 
-                rating_id=content_id
+                rating_id=content_id,
+                defaults={"score": score}
             )
-            return Response('Created', status=status.HTTP_201_CREATED)
-        except IntegrityError:
-            res = UserRating.objects.filter(
-                rating_id=content_id, user_id=request.user.id).update(
-                    user_id=user_id, 
-                    score=score, 
-                    rating_id=content_id
-                )
-            return Response('Updated', status=status.HTTP_200_OK)
+            return Response('Done', status=status.HTTP_201_CREATED)
         except Exception as exc:
-            return Response(exc, status=status.HTTP_400_BAD_REQUEST)
+            return Response('Error', status=status.HTTP_400_BAD_REQUEST)
