@@ -44,7 +44,6 @@ class UserRating(models.Model):
         (4, _("Very Good")),
         (5, _("Excellent")),
     )
-    import uuid
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     score = models.PositiveSmallIntegerField(choices=SCORE_CHOICES, default=1)
     rating = models.ForeignKey(Rating, related_name='user_ratings', on_delete=models.CASCADE)
