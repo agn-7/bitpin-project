@@ -7,7 +7,9 @@ from operator import imod
 from django.conf import settings
 from django.db import models
 from django.db.models import Avg, Count
+from django.forms import ValidationError
 from django.utils.translation import gettext as _
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from contents.models import Content
 
@@ -45,8 +47,19 @@ class UserRating(models.Model):
         (5, _("Excellent")),
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
-    score = models.PositiveSmallIntegerField(choices=SCORE_CHOICES, default=1)
+    score = models.PositiveSmallIntegerField(
+        choices=SCORE_CHOICES, default=1, 
+            validators=[
+                MaxValueValidator(5),
+                MinValueValidator(1)
+            ]
+    )
     rating = models.ForeignKey(Rating, related_name='user_ratings', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        super(UserRating, self).save(*args, **kwargs)
+        if int(self.score) < 1 or int(self.score) > 5:
+            raise ValidationError('Score must be located between 0 to 5')
 
     class Meta:
         unique_together = ['user', 'rating']
