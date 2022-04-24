@@ -57,9 +57,9 @@ class UserRating(models.Model):
     rating = models.ForeignKey(Rating, related_name='user_ratings', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        super(UserRating, self).save(*args, **kwargs)
         if int(self.score) < 1 or int(self.score) > 5:
             raise ValidationError('Score must be located between 0 to 5')
+        super(UserRating, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ['user', 'rating']
