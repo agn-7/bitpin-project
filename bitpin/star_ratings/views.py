@@ -39,4 +39,5 @@ class RatingView(APIView):
                 '''Means updated'''
                 return Response('Updated', status=status.HTTP_200_OK)
         except Exception as exc:
-            return Response('Error', status=status.HTTP_400_BAD_REQUEST)
+            print(exc)
+            return Response(f"Error: {exc}", status=status.HTTP_400_BAD_REQUEST)
