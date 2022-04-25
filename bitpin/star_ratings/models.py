@@ -1,8 +1,6 @@
 from __future__ import division, unicode_literals
 
 from decimal import Decimal
-from multiprocessing.spawn import import_main_path
-from operator import imod
 
 from django.conf import settings
 from django.db import models
