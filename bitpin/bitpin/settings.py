@@ -87,20 +87,16 @@ WSGI_APPLICATION = "bitpin.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
-    #     "NAME": "bitpin_db",
-    #     "USER": "bitpin_usr",
-    #     "PASSWORD": "root",
-    #     "HOST": "bitpin_db",
-    #     "PORT": "",
-    #     "TEST": {
-    #         "NAME": "bitpin_test_db",
-    #     },
-    # }
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "bitpin_db",
+        "USER": "bitpin_usr",
+        "PASSWORD": "root",
+        "HOST": "bitpin_db",
+        "PORT": "",
+        "TEST": {
+            "NAME": "bitpin_test_db",
+        },
+    }
 }
 
 
