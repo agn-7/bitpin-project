@@ -46,6 +46,5 @@ def auth_api_client(api_client, token):
 
 @pytest.fixture
 def auth_client(token):
-    client = Client(HTTP_AUTHORIZATION='Token ' + token)
+    client = Client(HTTP_AUTHORIZATION="Token " + token)
     return client
-
