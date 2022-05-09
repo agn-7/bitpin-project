@@ -33,4 +33,4 @@ Endpoint |HTTP Method | CRUD Method | Result
 `api/v1/content/` | GET | READ | Get all contents
 `api/v1/rate/:content_id/` | POST | CREATE | Create a new vote
 `api/v1/rate/`| POST | CREATE | Create a new vote
-`api-token-auth/` | POST | READ | Get token
+`api-token-auth/` | POST | READ | Get a token
