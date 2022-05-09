@@ -10,6 +10,9 @@ from contents.views import ContentView
 from star_ratings.views import RatingView
 
 
+pytestmark = pytest.mark.django_db
+
+
 class TestEndpoints:
     content_endpoint = "/api/v1/content/"
     rate_endpoint = "/api/v1/rate/"
