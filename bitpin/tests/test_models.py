@@ -1,5 +1,7 @@
 import pytest
 
+from django.forms import ValidationError
+
 # from hypothesis.extra.django import TestCase
 
 from contents.models import Content
@@ -8,7 +10,7 @@ from users.models import CustomUser
 
 
 @pytest.mark.django_db
-def test_create_content():
+def test_models():
     content = Content.objects.create(title="Test", text="Something else.")
     assert content.title == "Test"
     assert content.text == "Something else."
@@ -16,8 +18,11 @@ def test_create_content():
 
     user = CustomUser.objects.create(username="admin", password="admin")
     rating = Rating.objects.create(count=0, average=0, content=content)
-    user_rating = UserRating.objects.create(user=user, score=5, rating=rating)
+    UserRating.objects.create(user=user, score=5, rating=rating)
+    UserRating.objects.create(score=1, rating=rating)
+    assert rating.count == 2
+    assert rating.average == 3
+    assert Rating.objects.filter(count=2, average=3, content=content).exists()
 
-    assert rating.count == 1
-    assert rating.average == 5
-    assert Rating.objects.filter(count=1, average=5, content=content).exists()
+    with pytest.raises(ValidationError):
+        UserRating.objects.create(score=6, rating=rating)

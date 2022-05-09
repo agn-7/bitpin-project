@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-cd ./bitpin
+sleep 1
 
-python3 manage.py makemigrations &&
-python3 manage.py migrate
+python manage.py makemigrations &&
+python manage.py migrate --settings=bitpin.product_settings
 
 gunicorn bitpin.wsgi:application --bind 0.0.0.0:8000 -w 2

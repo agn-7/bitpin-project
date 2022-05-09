@@ -34,10 +34,10 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
-          pytest tests
+          pytest bitpin/tests
       - name:  Code Coverage
         run: |
-          pytest tests --cov=./bitpin --cov-report=xml --cov-report=term-missing 
+          pytest bitpin/tests --cov=./bitpin --cov-report=xml --cov-report=term-missing 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2  
      
