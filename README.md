@@ -7,7 +7,6 @@
 
 ## Django + Docker + Postgresql + DRF + pytest
 
----
 ### Running
 
 Normally you can run the project in development mode:
