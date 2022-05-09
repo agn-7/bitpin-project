@@ -9,7 +9,6 @@ from users.models import CustomUser
 from contents.views import ContentView
 from star_ratings.views import RatingView
 
-
 pytestmark = pytest.mark.django_db
 
 
