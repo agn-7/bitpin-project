@@ -5,7 +5,7 @@
 
 # bitpin-project
 
-## Django + Docker + Postgresql + DRF + pytest
+## Django + DRF + Postgresql + pytest + Docker + Nginx + gunicorn + uvicorn (asgi)
 
 ### Running
 
