@@ -47,6 +47,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "/opt/media:/code/media:rw"
       - "./nginx:/opt/nginx:rw"
+      - "./bitpin/static:/code/static"
     expose:
       - "80"
       - "8000"
