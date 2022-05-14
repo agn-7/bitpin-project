@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Prefetch
 
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -14,6 +15,7 @@ from rest_framework.authentication import (
 
 from .serializers import ContentSerializer
 from .models import Content
+from star_ratings.models import UserRating, Rating
 
 
 class ContentView(generics.ListAPIView):
@@ -24,7 +26,11 @@ class ContentView(generics.ListAPIView):
     serializer_class = ContentSerializer
 
     def get_queryset(self):
-        return Content.objects.all()
+        reverse_related = Content.objects.select_related("rating")
+        reverse_prefetch = Rating.objects.prefetch_related("user_ratings")
+        return reverse_related.prefetch_related(
+            Prefetch("rating", queryset=reverse_prefetch)
+        ).all()
 
     def get(self, request, format=None):
         try:
