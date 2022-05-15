@@ -25,16 +25,23 @@ class ContentView(generics.ListAPIView):
     renderer_classes = (JSONRenderer,)
     serializer_class = ContentSerializer
 
-    def get_queryset(self):
+    def get_queryset(self, user):
+        # return Content.objects.all()  # worst one
+        # return Content.objects.select_related("rating").all()  # 10% more performance
+        # return Content.objects.select_related("rating").prefetch_related("rating__user_ratings")
+        return Content.objects.select_related("rating").prefetch_related("rating__user_ratings").prefetch_related("rating__user_ratings__user")  # 20% more performance
+        r3 = Content.objects.select_related("rating").prefetch_related("rating__user_ratings")
+        selected_users = UserRating.objects.select_related("user_set").filter(rating__user_ratings__user__id=1)
+        return r3.prefetch_related(Prefetch("rating", queryset=selected_users))
         reverse_related = Content.objects.select_related("rating")
         reverse_prefetch = Rating.objects.prefetch_related("user_ratings")
         return reverse_related.prefetch_related(
             Prefetch("rating", queryset=reverse_prefetch)
-        ).all()
+        ).all()  # the same with select_related
 
     def get(self, request, format=None):
         try:
-            content_list = self.get_queryset()
+            content_list = self.get_queryset(request.user.id)
             if content_list:
                 serializer = ContentSerializer(
                     content_list, many=True, context={"user_id": request.user.id}
