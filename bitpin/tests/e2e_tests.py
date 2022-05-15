@@ -40,11 +40,11 @@ class TestEndpoints:
             self.content_endpoint,
         )
 
-        print(response.data)
+        print(response.json())
         assert response.status_code == 200
         data = response.json()[0]
         assert data["title"] == self.content.title
-        assert float(data["rate"][0]["average"]) == self.rating.average
+        assert float(data["rates"]["average"]) == self.rating.average
 
     @patch.object(RatingView, "permission_classes", [])
     def test_post_rate(self, api_client):
