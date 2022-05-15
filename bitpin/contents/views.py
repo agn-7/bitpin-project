@@ -32,7 +32,6 @@ class ContentView(generics.ListAPIView):
             .prefetch_related("rating__user_ratings__user")
         )  # TODO: add .filter(rating__user_ratings__user__id=user) just for the latest prefetch_related
 
-
     def get(self, request, format=None):
         try:
             content_list = self.get_queryset(request.user.id)
