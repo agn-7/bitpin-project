@@ -26,18 +26,12 @@ class ContentView(generics.ListAPIView):
     serializer_class = ContentSerializer
 
     def get_queryset(self, user):
-        # return Content.objects.all()  # worst one
-        # return Content.objects.select_related("rating").all()  # 10% more performance
-        # return Content.objects.select_related("rating").prefetch_related("rating__user_ratings")
-        return Content.objects.select_related("rating").prefetch_related("rating__user_ratings").prefetch_related("rating__user_ratings__user")  # 20% more performance
-        r3 = Content.objects.select_related("rating").prefetch_related("rating__user_ratings")
-        selected_users = UserRating.objects.select_related("user_set").filter(rating__user_ratings__user__id=1)
-        return r3.prefetch_related(Prefetch("rating", queryset=selected_users))
-        reverse_related = Content.objects.select_related("rating")
-        reverse_prefetch = Rating.objects.prefetch_related("user_ratings")
-        return reverse_related.prefetch_related(
-            Prefetch("rating", queryset=reverse_prefetch)
-        ).all()  # the same with select_related
+        return (
+            Content.objects.select_related("rating")
+            .prefetch_related("rating__user_ratings")
+            .prefetch_related("rating__user_ratings__user")
+        )  # TODO: add .filter(rating__user_ratings__user__id=user) just for the latest prefetch_related
+
 
     def get(self, request, format=None):
         try:
