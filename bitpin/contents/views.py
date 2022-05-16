@@ -25,19 +25,21 @@ class ContentView(generics.ListAPIView):
     renderer_classes = (JSONRenderer,)
     serializer_class = ContentSerializer
 
-    def get_queryset(self, user):
-        return (
-            Content.objects.select_related("rating")
-            .prefetch_related("rating__user_ratings")
-            .prefetch_related("rating__user_ratings__user")
-        )  # TODO: add .filter(rating__user_ratings__user__id=user) just for the latest prefetch_related
+    def get_queryset(self, user_id):
+        return Content.objects.select_related("rating").prefetch_related(
+            Prefetch(
+                "rating__user_ratings",
+                queryset=UserRating.objects.filter(user__id=user_id),
+                to_attr="limited_user",
+            )
+        )
 
     def get(self, request, format=None):
         try:
             content_list = self.get_queryset(request.user.id)
             if content_list:
                 serializer = ContentSerializer(
-                    content_list, many=True, context={"user_id": request.user.id}
+                    content_list, many=True
                 )
                 return Response(serializer.data)
             else:
