@@ -38,9 +38,7 @@ class ContentView(generics.ListAPIView):
         try:
             content_list = self.get_queryset(request.user.id)
             if content_list:
-                serializer = ContentSerializer(
-                    content_list, many=True
-                )
+                serializer = ContentSerializer(content_list, many=True)
                 return Response(serializer.data)
             else:
                 return Response(status=status.HTTP_404_NOT_FOUND)
