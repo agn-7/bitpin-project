@@ -11,10 +11,7 @@ class ContentSerializer(serializers.ModelSerializer):
 
     def get_user_rate(self, instance):
         user_rating = instance.rating.limited_user
-        if len(user_rating) == 1:
-            return user_rating[0].score
-        else:
-            return None
+        return user_rating[0].score if len(user_rating) == 1 else None
 
     class Meta:
         fields = "__all__"
