@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitpin-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitpin-app
+  template:
+    metadata:
+      labels:
+        app: bitpin-app
+    spec:
+      containers:
+        - name: bitpin-app
+          image: bitpin:1.0.0
+          command: ["bash", "start.sh"]
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: bitpin.settings
+          volumeMounts:
+            - name: media-volume
+              mountPath: /code/media
+            - name: static-volume
+              mountPath: /code/static
+            - name: timezone-volume
+              mountPath: /etc/timezone
+              readOnly: true
+            - name: localtime-volume
+              mountPath: /etc/localtime
+              readOnly: true
+      volumes:
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: bitpin-media-pvc
+        - name: static-volume
+          persistentVolumeClaim:
+            claimName: bitpin-static-pvc
+        - name: timezone-volume
+          configMap:
+            name: timezone-config
+        - name: localtime-volume
+          configMap:
+            name: localtime-config
