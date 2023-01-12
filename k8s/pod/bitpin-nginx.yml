@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bitpin-nginx
+spec:
+  containers:
+    - name: bitpin-nginx
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: nginx-volume
+          mountPath: /etc/nginx/conf.d/nginx.conf
+        - name: media-volume
+          mountPath: /code/media
+        - name: static-volume
+          mountPath: /code/static
+  volumes:
+    - name: nginx-volume
+      hostPath:
+        path: ./bitpin/nginx/nginx.conf
+        type: File
+    - name: media-volume
+      persistentVolumeClaim:
+        claimName: bitpin-media-pvc
+    - name: static-volume
+      persistentVolumeClaim:
+        claimName: bitpin-static-pvc
