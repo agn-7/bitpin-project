@@ -3,8 +3,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: pgadmin-data
 spec:
+  storageClassName: microk8s-hostpath
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
+  volumeMode: Filesystem
+  selector:
+    matchLabels:
+      app: pgadmin

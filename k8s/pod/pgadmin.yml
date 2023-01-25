@@ -14,10 +14,9 @@ spec:
         - name: PGADMIN_DEFAULT_PASSWORD
           value: admin
       volumeMounts:
-        - name: pgadmin-volume
+        - name: pgadmin-data
           mountPath: /root/.pgadmin
   volumes:
-    - name: pgadmin-volume
-      hostPath:
-        path: /path/to/pgadmin
-        type: Directory
+    - name: pgadmin-data
+      persistentVolumeClaim:
+        claimName: pgadmin-data
