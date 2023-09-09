@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: bitpin-app
-          image: bitpin:1.0.0
+          image: localhost:5000/bitpin:1.0.0
+          imagePullPolicy: IfNotPresent
           command: ["bash", "start.sh"]
           ports:
             - containerPort: 8000
@@ -28,9 +29,11 @@ spec:
               mountPath: /code/static
             - name: timezone-volume
               mountPath: /etc/timezone
+              subPath: timezone
               readOnly: true
             - name: localtime-volume
               mountPath: /etc/localtime
+              subPath: localtime
               readOnly: true
       volumes:
         - name: media-volume

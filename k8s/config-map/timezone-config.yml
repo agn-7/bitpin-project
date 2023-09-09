@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: timezone-config
 data:
-  TZ: "UTC"
+  timezone: |-
+    UTC
