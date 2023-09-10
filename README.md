@@ -5,7 +5,7 @@
 
 # bitpin-project
 
-## Django + Docker + Postgresql + DRF + pytest
+## Django + Docker + Postgresql + DRF + pytest + Kubernetes
 
 ### Running
 
