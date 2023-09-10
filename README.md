@@ -29,7 +29,7 @@ Or via Kubernetes (microk8s):
 
 ```bash
 docker compose build
-docker run -d -p 5000:5000 --restart=always --name registry registry:2
+docker run -d -p 5000:5000 --restart=unless-stopped --name registry registry:2
 
 mkdir manifests
 cd k8s
