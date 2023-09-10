@@ -130,3 +130,7 @@ dmypy.json
 .pyre/
 
 .idea/
+
+
+# kubernetes manifests
+manifests/
