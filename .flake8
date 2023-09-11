@@ -1,5 +1,6 @@
 [flake8]
 exclude =
     */migrations/*
+    env/
 max-complexity = 10
 max-line-length = 127
