@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitpin-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitpin-db
+  template:
+    metadata:
+      labels:
+        app: bitpin-db
+    spec:
+      containers:
+      - name: bitpin-db
+        image: postgres:11-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "root"
+        - name: POSTGRES_USER
+          value: "bitpin_usr"
+        - name: POSTGRES_DB
+          value: "bitpin_db"
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: bitpin-postgres-data
+      volumes:
+      - name: bitpin-postgres-data
+        persistentVolumeClaim:
+          claimName: bitpin-postgres-pvc
