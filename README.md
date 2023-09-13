@@ -30,10 +30,11 @@ Or via Kubernetes (microk8s):
 ```bash
 docker compose build
 docker run -d -p 5000:5000 --restart=unless-stopped --name registry registry:2
+docker tag bitpin:1.0.0 localhost:5000/bitpin:1.0.0
+docker push localhost:5000/bitpin:1.0.0
 
 mkdir manifests
-cd k8s
-find . -name "*.yml" | xargs -I{} cp {} ../manifests/
+find k8s/ -name "*.yml" | xargs -I{} cp {} manifests/
 microk8s enable dns storage
 microk8s kubectl apply -f manifests
 microk8s kubectl get all
