@@ -7,8 +7,8 @@ DATABASES = {
         "NAME": "bitpin_db",
         "USER": "bitpin_usr",
         "PASSWORD": "root",
-        "HOST": "bitpin_db",
-        "PORT": "",
+        "HOST": "bitpin-db-service",
+        "PORT": "5432",
         "TEST": {
             "NAME": "bitpin_test_db",
         },

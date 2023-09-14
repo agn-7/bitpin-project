@@ -15,7 +15,7 @@ spec:
       containers:
         - name: bitpin-app
           image: localhost:5000/bitpin:1.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: IfNotPresent  # for development change it to Always
           command: ["bash", "start.sh"]
           ports:
             - containerPort: 8000

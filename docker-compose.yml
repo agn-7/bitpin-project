@@ -13,13 +13,13 @@ services:
       - "./bitpin/static:/code/static:ro"
       - "./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro"
     depends_on:
-      - bitpin_app
+      - bitpin-app-service
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
 
-  bitpin_db:
+  bitpin-db-service:
     image: postgres:11-alpine
     restart: unless-stopped
     expose:
@@ -36,7 +36,7 @@ services:
       options:
         max-size: "50m"
 
-  bitpin_app:
+  bitpin-app-service:
     build: .
     image: bitpin:1.0.0
     container_name: bitpin_app
@@ -52,7 +52,7 @@ services:
       - "80"
       - "8000"
     depends_on:
-      - bitpin_db
+      - bitpin-db-service
     logging:
       driver: "json-file"
       options:
@@ -63,7 +63,7 @@ services:
     hostname: pgadmin
     image: dpage/pgadmin4
     depends_on:
-      - bitpin_db
+      - bitpin-db-service
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@ava.com
       PGADMIN_DEFAULT_PASSWORD: admin
