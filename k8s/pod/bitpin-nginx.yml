@@ -5,7 +5,8 @@ metadata:
 spec:
   containers:
     - name: bitpin-nginx
-      image: nginx:alpine
+      image: localhost:5000/nginx:alpine
+      imagePullPolicy: IfNotPresent  # for development change it to Always
       ports:
         - containerPort: 80
       volumeMounts:
