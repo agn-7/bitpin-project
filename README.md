@@ -32,13 +32,18 @@ Or via Kubernetes (microk8s):
 docker compose build
 docker run -d -p 5000:5000 --restart=unless-stopped --name registry registry:2
 docker tag bitpin:1.0.0 localhost:5000/bitpin:1.0.0
+docker tag nginx:alpine localhost:5000/nginx:alpine
 docker push localhost:5000/bitpin:1.0.0
+docker push localhost:5000/nginx:alpine
 
 mkdir manifests
 find k8s/ -name "*.yml" | xargs -I{} cp {} manifests/
 microk8s enable dns storage
 microk8s kubectl apply -f manifests
 microk8s kubectl get all
+
+microk8s kubectl get pods --show-labels
+microk8s kubectl label pods bitpin-nginx app=bitpin-nginx
 ```
 
 
