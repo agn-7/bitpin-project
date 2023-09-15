@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: localtime-config
-data:
-  localtime: /etc/localtime

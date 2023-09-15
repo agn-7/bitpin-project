@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: timezone-config
-data:
-  timezone: |-
-    UTC

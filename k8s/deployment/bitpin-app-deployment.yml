@@ -27,14 +27,6 @@ spec:
               mountPath: /code/media
             - name: static-volume
               mountPath: /code/static
-            - name: timezone-volume
-              mountPath: /etc/timezone
-              subPath: timezone
-              readOnly: true
-            - name: localtime-volume
-              mountPath: /etc/localtime
-              subPath: localtime
-              readOnly: true
       volumes:
         - name: media-volume
           persistentVolumeClaim:
@@ -42,9 +34,3 @@ spec:
         - name: static-volume
           persistentVolumeClaim:
             claimName: bitpin-static-pvc
-        - name: timezone-volume
-          configMap:
-            name: timezone-config
-        - name: localtime-volume
-          configMap:
-            name: localtime-config
