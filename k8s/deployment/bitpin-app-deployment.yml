@@ -21,7 +21,7 @@ spec:
             - containerPort: 8000
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: bitpin.settings
+              value: bitpin.production_settings
           volumeMounts:
             - name: media-volume
               mountPath: /code/media

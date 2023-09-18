@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: bitpin-config
 data:
-  DJANGO_SETTINGS_MODULE: "bitpin.settings"
+  DJANGO_SETTINGS_MODULE: "bitpin.production_settings"

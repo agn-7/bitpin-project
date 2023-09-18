@@ -47,7 +47,7 @@ microk8s kubectl label pods bitpin-nginx app=bitpin-nginx
 microk8s kubectl exec -it <bitpin-app-pod-name> bash
 python manage.py createsuperuser --settings=bitpin.production_settings
 
-microk8s kubectl port-forward service/bitpin-nginx-service 80:80
+microk8s kubectl port-forward service/bitpin-nginx-service 8080:80
 ```
 
 
