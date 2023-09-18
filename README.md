@@ -23,7 +23,7 @@ The project can also be run in production mode using docker compose:
 
 ```bash
 docker-compose up -d --build
-docker exec -it bitpin_app python manage.py createsuperuser --settings=bitpin.product_settings
+docker exec -it bitpin_app python manage.py createsuperuser --settings=bitpin.production_settings
 ```
 
 Or via Kubernetes (microk8s):
@@ -44,6 +44,10 @@ microk8s kubectl get all
 
 microk8s kubectl get pods --show-labels
 microk8s kubectl label pods bitpin-nginx app=bitpin-nginx
+microk8s kubectl exec -it <bitpin-app-pod-name> bash
+python manage.py createsuperuser --settings=bitpin.production_settings
+
+microk8s kubectl port-forward service/bitpin-nginx-service 80:80
 ```
 
 
