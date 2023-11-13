@@ -19,7 +19,7 @@ class RatingView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsAdminUser)
     http_method_names = ("post",)
-    # serializer_class = UserRatingSerializer  # TODO :: Add a serilizer to create and update the model.
+    # serializer_class = UserRatingSerializer  # TODO :: Add a serializer to create and update the model.
 
     def post(self, request, *args, **kwargs):
         try:

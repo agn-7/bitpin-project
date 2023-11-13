@@ -11,6 +11,7 @@ class UserRatingAdmin(admin.ModelAdmin):
 
 class RatingAdmin(admin.ModelAdmin):
     list_display = ("__str__", "average", "count")
+    readonly_fields = ("average", "count")
 
 
 admin.site.register(Rating, RatingAdmin)
